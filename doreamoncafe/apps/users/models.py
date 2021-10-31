@@ -63,6 +63,8 @@ class DoreamonCafeUser(AbstractBaseUser, PermissionsMixin, MyBaseModel):
     address = models.CharField(max_length=255,
                                blank=True,
                                null=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'mobile_number'
