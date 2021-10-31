@@ -1,9 +1,11 @@
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.meta_app.models import MyBaseModel
+
+from .validators import validate_indian_mobile_number
+
 
 class UserManager(BaseUserManager):
     """
@@ -42,8 +44,10 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class DoreamonCafeUser(AbstractBaseUser, PermissionsMixin, MyBaseModel):
-    mobile_number = models.CharField(max_length=10,unique=True)
+    mobile_number = models.CharField(max_length=10, unique=True, validators=[
+                                     validate_indian_mobile_number])
 
     email = models.EmailField(blank=True, null=True)
 
@@ -57,9 +61,9 @@ class DoreamonCafeUser(AbstractBaseUser, PermissionsMixin, MyBaseModel):
                                  null=True)
 
     address = models.CharField(max_length=255,
-                                 blank=True,
-                                 null=True)
-    
+                               blank=True,
+                               null=True)
+
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'mobile_number'
     objects = UserManager()
