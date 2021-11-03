@@ -66,6 +66,6 @@ class DoreamonCafeUser(AbstractBaseUser, PermissionsMixin, MyBaseModel):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['password']
     USERNAME_FIELD = 'mobile_number'
     objects = UserManager()
